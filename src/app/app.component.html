@@ -43,14 +43,6 @@
       </mat-card>
       <mat-card style="margin: 20px;">
         <mat-card-header>
-          <mat-card-title>Active Cases</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.TotalConfirmed - data.Global.TotalRecovered | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
           <mat-card-title>Total Deaths</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -95,6 +87,14 @@
             </mat-card-header>
             <mat-card-content>
               <h1 style="padding: 16px;">{{item.NewConfirmed | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Active Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{item.TotalConfirmed - item.TotalRecovered | number}}</h1>
             </mat-card-content>
           </mat-card>
           <mat-card style="margin: 20px;">
