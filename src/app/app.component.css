@@ -1,0 +1,31 @@
+@media only screen and (max-width: 600px) {
+  #Home {
+    margin: 5px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #Home {
+    margin: 5%;
+  }
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+mat-expansion-panel {
+  margin-bottom: 20px;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+#title {
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 56px;
+  margin: 15px 5px;
+  text-align: center;
+}
