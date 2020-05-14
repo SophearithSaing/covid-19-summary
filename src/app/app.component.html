@@ -2,16 +2,19 @@
 
   <h1 id="title">Covid-19 Summary</h1>
 
-  <mat-spinner *ngIf="isLoading === true"></mat-spinner>
+  <div *ngIf="isLoading === true">
+    <h2>Getting Data</h2>
+    <mat-spinner></mat-spinner>
+  </div>
 
-  <mat-tab-group mat-align-tabs="center" *ngIf="isLoading === false">
+  <mat-tab-group mat-align-tabs="center" *ngIf="isLoading === false || changingPage === false">
     <mat-tab label="Cases">
       <mat-card style="margin: 20px;">
         <mat-card-header>
           <mat-card-title>New Cases</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.NewConfirmed | number}}</h1>
+          <h1 style="padding: 16px;">{{global.NewConfirmed | number}}</h1>
         </mat-card-content>
       </mat-card>
       <mat-card style="margin: 20px;">
@@ -19,7 +22,7 @@
           <mat-card-title>Active Cases</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.TotalConfirmed - data.Global.TotalRecovered | number}}</h1>
+          <h1 style="padding: 16px;">{{global.TotalConfirmed - global.TotalRecovered | number}}</h1>
         </mat-card-content>
       </mat-card>
       <mat-card style="margin: 20px;">
@@ -27,7 +30,7 @@
           <mat-card-title>Total Cases</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.TotalConfirmed | number}}</h1>
+          <h1 style="padding: 16px;">{{global.TotalConfirmed | number}}</h1>
         </mat-card-content>
       </mat-card>
     </mat-tab>
@@ -38,7 +41,7 @@
           <mat-card-title>New Deaths</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.NewDeaths | number}}</h1>
+          <h1 style="padding: 16px;">{{global.NewDeaths | number}}</h1>
         </mat-card-content>
       </mat-card>
       <mat-card style="margin: 20px;">
@@ -46,7 +49,7 @@
           <mat-card-title>Total Deaths</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.TotalDeaths  | number}}</h1>
+          <h1 style="padding: 16px;">{{global.TotalDeaths  | number}}</h1>
         </mat-card-content>
       </mat-card>
     </mat-tab>
@@ -57,7 +60,7 @@
           <mat-card-title>New Recovered</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.NewRecovered | number}}</h1>
+          <h1 style="padding: 16px;">{{global.NewRecovered | number}}</h1>
         </mat-card-content>
       </mat-card>
       <mat-card style="margin: 20px;">
@@ -65,13 +68,19 @@
           <mat-card-title>Total Recovered</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <h1 style="padding: 16px;">{{data.Global.TotalRecovered | number}}</h1>
+          <h1 style="padding: 16px;">{{global.TotalRecovered | number}}</h1>
         </mat-card-content>
       </mat-card>
     </mat-tab>
   </mat-tab-group>
 
   <div *ngIf="isLoading === false">
+    <mat-paginator
+    [length]="totalCountries"
+    [pageSize]="countriesPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onChangedPage($event)">
+    </mat-paginator>
     <mat-expansion-panel *ngFor="let item of showCountries">
       <mat-expansion-panel-header>
         <mat-panel-title>
