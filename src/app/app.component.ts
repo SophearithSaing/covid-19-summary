@@ -29,28 +29,27 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<{ Global: any, Countries: any }>('https://api.covid19api.com/summary')
-    .pipe(
-      retry(5), // retry a failed request up to 3 times
-      catchError(this.handleError) // then handle the error
-    )
-    .subscribe(data => {
-      this.global = data.Global;
-      this.countries = data.Countries;
-      this.totalCountries = this.countries.length;
-      this.showCountries = this.countries.slice(0, this.countriesPerPage);
-      // console.log(this.data);
-      this.isLoading = false;
-      // console.log(this.countriesPerPage * (this.currentPage - 1),
-      //                                      this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
-
-    });
+      .pipe(
+        retry(5), // retry a failed request up to 3 times
+        catchError(this.handleError) // then handle the error
+      )
+      .subscribe(data => {
+        this.global = data.Global;
+        this.countries = data.Countries;
+        this.totalCountries = this.countries.length;
+        this.showCountries = this.countries.slice(0, this.countriesPerPage);
+        // console.log(this.data);
+        this.isLoading = false;
+        // console.log(this.countriesPerPage * (this.currentPage - 1),
+        //                                      this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
+      });
   }
 
   onChangedPage(pageData: PageEvent) {
     this.currentPage = pageData.pageIndex + 1;
     this.countriesPerPage = pageData.pageSize;
     this.showCountries = this.countries.slice(this.countriesPerPage * (this.currentPage - 1),
-                                              this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
+      this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
     // console.log(this.countriesPerPage * (this.currentPage - 1), this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
     // console.log(this.showCountries);
     // this.postsService.getPosts(this.postsPerPage, this.currentPage);
