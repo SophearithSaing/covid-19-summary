@@ -10,6 +10,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule} from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -25,6 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
     HttpClientModule
   ],
   providers: [],

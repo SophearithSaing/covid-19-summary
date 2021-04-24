@@ -37,3 +37,19 @@ h2 {
   text-align: center;
   color: #000;
 }
+
+a {
+  color: black;
+  font-weight: 300;
+}
+
+#sort {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 10px;
+}
+
+button {
+  margin-right: 10px;
+}

@@ -52,6 +52,14 @@
           <h1 style="padding: 16px;">{{global.TotalDeaths  | number}}</h1>
         </mat-card-content>
       </mat-card>
+      <mat-card style="margin: 20px;">
+        <mat-card-header>
+          <mat-card-title>Deaths Percentage</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 style="padding: 16px;">{{global.DeathsPercentage}}%</h1>
+        </mat-card-content>
+      </mat-card>
     </mat-tab>
 
     <mat-tab label="Recovered">
@@ -71,16 +79,31 @@
           <h1 style="padding: 16px;">{{global.TotalRecovered | number}}</h1>
         </mat-card-content>
       </mat-card>
+      <mat-card style="margin: 20px;">
+        <mat-card-header>
+          <mat-card-title>Recovery Percentage</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 style="padding: 16px;">{{global.RecoveredPercentage}}%</h1>
+        </mat-card-content>
+      </mat-card>
     </mat-tab>
   </mat-tab-group>
 
   <div *ngIf="isLoading === false">
-    <mat-paginator
-    [length]="totalCountries"
-    [pageSize]="countriesPerPage"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="onChangedPage($event)">
-    </mat-paginator>
+
+    <div id="sort" matSort (matSortChange)="sortData($event)">
+      <button mat-raised-button><span mat-sort-header="Country">Country</span></button>
+      <button mat-raised-button><span mat-sort-header="NewConfirmed">New Cases</span></button>
+      <button mat-raised-button><span mat-sort-header="TotalConfirmed">Total Cases</span></button>
+      <button mat-raised-button><span mat-sort-header="NewDeaths">New Deaths</span></button>
+      <button mat-raised-button><span mat-sort-header="TotalDeaths">Total Deaths</span></button>
+      <button mat-raised-button><span mat-sort-header="DeathsPercentage">Deaths %</span></button>
+      <button mat-raised-button><span mat-sort-header="NewRecovered">New Recovered</span></button>
+      <button mat-raised-button><span mat-sort-header="TotalRecovered">Total Recovered</span> </button>
+      <button mat-raised-button><span mat-sort-header="RecoveredPercentage">Recovered %</span></button>
+    </div>
+
     <mat-expansion-panel *ngFor="let item of showCountries">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -133,6 +156,14 @@
               <h1 style="padding: 16px;">{{item.TotalDeaths | number}}</h1>
             </mat-card-content>
           </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Deaths Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{item.DeathsPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
         </mat-tab>
 
         <mat-tab label="Recovered">
@@ -152,6 +183,14 @@
               <h1 style="padding: 16px;">{{item.TotalRecovered | number}}</h1>
             </mat-card-content>
           </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Recovery Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{item.RecoveredPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
         </mat-tab>
       </mat-tab-group>
 
@@ -169,4 +208,3 @@
   </h2>
 
 </div>
-
