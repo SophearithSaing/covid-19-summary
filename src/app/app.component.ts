@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   isLoading = true;
 
   global = null;
+  selectedCountry = null;
   countries = [];
   showCountries = [];
   sortedCountries = [];
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
         retry(5), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       )
+      // tslint:disable-next-line: deprecation
       .subscribe(data => {
         this.global = data.Global;
         // add percentages
@@ -47,24 +49,27 @@ export class AppComponent implements OnInit {
           // add percentages
           element.DeathsPercentage = ((element.TotalDeaths * 100) / element.TotalConfirmed).toFixed(2);
           element.RecoveredPercentage = ((element.TotalRecovered * 100) / element.TotalConfirmed).toFixed(2);
+
+          let selectedCountry = localStorage.getItem('savedCountry');
+          if (selectedCountry === null) {
+            selectedCountry = 'Cambodia';
+          }
+          if (element.Country === selectedCountry) {
+            this.selectedCountry = element;
+          }
         });
         this.sortedCountries = this.countries.slice();
         this.totalCountries = this.countries.length;
         this.showCountries = this.countries.slice(0, this.countriesPerPage);
-        // console.log(this.data);
         this.isLoading = false;
-        // console.log(this.countriesPerPage * (this.currentPage - 1),
-        //                                      this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
       });
   }
 
   onChangedPage(pageData: PageEvent) {
     this.currentPage = pageData.pageIndex + 1;
     this.countriesPerPage = pageData.pageSize;
-    // this.showCountries = this.countries.slice(this.countriesPerPage * (this.currentPage - 1),
     this.showCountries = this.sortedCountries.slice(this.countriesPerPage * (this.currentPage - 1),
       this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
-    // console.log(this.countriesPerPage * (this.currentPage - 1), this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
     console.log(this.sortedCountries);
   }
 
@@ -84,6 +89,14 @@ export class AppComponent implements OnInit {
       'Something bad happened; please try again later.');
   }
 
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  saveCountry(country: string) {
+    localStorage.setItem('savedCountry', country);
+  }
+
   sortData(sort: Sort) {
     const data = this.countries.slice();
     if (!sort.active || sort.direction === '') {
@@ -95,15 +108,15 @@ export class AppComponent implements OnInit {
     this.sortedCountries = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'Country': return compare(a.Country, b.Country, isAsc);
-        case 'NewConfirmed': return compare(a.NewConfirmed, b.NewConfirmed, isAsc);
-        case 'TotalConfirmed': return compare(a.TotalConfirmed, b.TotalConfirmed, isAsc);
-        case 'NewDeaths': return compare(a.NewDeaths, b.NewDeaths, isAsc);
-        case 'TotalDeaths': return compare(a.TotalDeaths, b.TotalDeaths, isAsc);
-        case 'DeathsPercentage': return compare(a.DeathsPercentage, b.DeathsPercentage, isAsc);
-        case 'NewRecovered': return compare(a.NewRecovered, b.NewRecovered, isAsc);
-        case 'TotalRecovered': return compare(a.TotalRecovered, b.TotalRecovered, isAsc);
-        case 'RecoveredPercentage': return compare(a.RecoveredPercentage, b.RecoveredPercentage, isAsc);
+        case 'Country': return this.compare(a.Country, b.Country, isAsc);
+        case 'NewConfirmed': return this.compare(a.NewConfirmed, b.NewConfirmed, isAsc);
+        case 'TotalConfirmed': return this.compare(a.TotalConfirmed, b.TotalConfirmed, isAsc);
+        case 'NewDeaths': return this.compare(a.NewDeaths, b.NewDeaths, isAsc);
+        case 'TotalDeaths': return this.compare(a.TotalDeaths, b.TotalDeaths, isAsc);
+        case 'DeathsPercentage': return this.compare(a.DeathsPercentage, b.DeathsPercentage, isAsc);
+        case 'NewRecovered': return this.compare(a.NewRecovered, b.NewRecovered, isAsc);
+        case 'TotalRecovered': return this.compare(a.TotalRecovered, b.TotalRecovered, isAsc);
+        case 'RecoveredPercentage': return this.compare(a.RecoveredPercentage, b.RecoveredPercentage, isAsc);
         default: return 0;
       }
     });
@@ -111,8 +124,4 @@ export class AppComponent implements OnInit {
       this.countriesPerPage * (this.currentPage - 1) + this.countriesPerPage);
   }
 
-}
-
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -8,85 +8,173 @@
   </div>
 
   <mat-tab-group mat-align-tabs="center" *ngIf="isLoading === false">
-    <mat-tab label="Cases">
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>New Cases</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.NewConfirmed | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Active Cases</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.TotalConfirmed - global.TotalRecovered | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Total Cases</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.TotalConfirmed | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-    </mat-tab>
+    <mat-tab label="{{selectedCountry.Country}}" *ngIf="selectedCountry !== null">
+      <mat-tab-group mat-align-tabs="center" *ngIf="isLoading === false">
+        <mat-tab label="Cases">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.NewConfirmed | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Active Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.TotalConfirmed - selectedCountry.TotalRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.TotalConfirmed | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
 
-    <mat-tab label="Deaths">
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>New Deaths</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.NewDeaths | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Total Deaths</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.TotalDeaths  | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Deaths Percentage</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.DeathsPercentage}}%</h1>
-        </mat-card-content>
-      </mat-card>
-    </mat-tab>
+        <mat-tab label="Deaths">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Deaths</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.NewDeaths | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Deaths</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.TotalDeaths | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Deaths Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.DeathsPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
 
-    <mat-tab label="Recovered">
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>New Recovered</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.NewRecovered | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Total Recovered</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.TotalRecovered | number}}</h1>
-        </mat-card-content>
-      </mat-card>
-      <mat-card style="margin: 20px;">
-        <mat-card-header>
-          <mat-card-title>Recovery Percentage</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <h1 style="padding: 16px;">{{global.RecoveredPercentage}}%</h1>
-        </mat-card-content>
-      </mat-card>
+        <mat-tab label="Recovered">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Recovered</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.NewRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Recovered</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.TotalRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Recovery Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{selectedCountry.RecoveredPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-tab>
+    <mat-tab label="Global">
+      <mat-tab-group mat-align-tabs="center" *ngIf="isLoading === false">
+        <mat-tab label="Cases">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.NewConfirmed | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Active Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.TotalConfirmed - global.TotalRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Cases</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.TotalConfirmed | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Deaths">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Deaths</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.NewDeaths | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Deaths</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.TotalDeaths | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Deaths Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.DeathsPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Recovered">
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>New Recovered</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.NewRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Total Recovered</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.TotalRecovered | number}}</h1>
+            </mat-card-content>
+          </mat-card>
+          <mat-card style="margin: 20px;">
+            <mat-card-header>
+              <mat-card-title>Recovery Percentage</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 style="padding: 16px;">{{global.RecoveredPercentage}}%</h1>
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
     </mat-tab>
   </mat-tab-group>
 
@@ -194,6 +282,7 @@
         </mat-tab>
       </mat-tab-group>
 
+      <button mat-raised-button class="save-country" (click)="saveCountry(item.Country)">Save Country</button>
     </mat-expansion-panel>
     <mat-paginator
     [length]="totalCountries"
